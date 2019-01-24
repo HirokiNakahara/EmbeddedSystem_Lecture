@@ -1,0 +1,80 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous">
+  </script>  
+
+  <script src="https://unpkg.com/obniz@1.15.2/obniz.js" crossorigin="anonymous"></script>
+</head>
+
+  <body>
+
+  <div id="obniz-debug"></div>
+  <button id="do">ド</button>
+  <button id="re">レ</button>
+  <button id="mi">ミ</button>
+  <button id="fa">ファ</button>
+  <button id="so">ソ</button>
+  <button id="ra">ラ</button>
+  <button id="shi">シ</button>
+  <button id="do_up">ド</button>
+    
+<script>
+var obniz = new Obniz("OBNIZ_ID_HERE");
+
+  obniz.onconnect = async function () {
+
+  var speaker = obniz.wired("Speaker", {signal:0 , gnd:1 });
+
+  async function obnizSpeaker(frq,str)
+  {
+    speaker.play(frq);
+    obniz.display.clear();
+    obniz.display.print(str);
+    await obniz.wait(300);
+    speaker.stop();
+  }
+  
+    var frq = [261.626,293.665,329.628,349.228,391.995,440,493.883,523.251];
+    var str = ["ド","レ","ミ","ファ","ソ","ラ","シ","ド(C5)"];
+  
+  $('#do').click(async function () {
+    obnizSpeaker(frq[0],str[0]);
+  });
+
+  $('#re').click(async function () {
+    obnizSpeaker(frq[1],str[1]);
+  });
+  
+  $('#mi').click(async function () {
+    obnizSpeaker(frq[2],str[2]);
+  });
+  
+    $('#fa').click(async function () {
+    obnizSpeaker(frq[3],str[3]);
+  });
+  
+    $('#so').click(async function () {
+    obnizSpeaker(frq[4],str[4]);
+  });
+  
+      $('#ra').click(async function () {
+    obnizSpeaker(frq[5],str[5]);
+  });
+  
+      $('#shi').click(async function () {
+    obnizSpeaker(frq[6],str[6]);
+  });
+
+      $('#do_up').click(async function () {
+    obnizSpeaker(frq[7],str[7]);
+  });
+}
+
+</script>
+</body>
+</html>
