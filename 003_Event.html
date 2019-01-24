@@ -1,0 +1,31 @@
+<!-- HTML Example -->
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://obniz.io/js/jquery-3.2.1.min.js"></script>
+  <script src="https://unpkg.com/obniz@1.9.1/obniz.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div id="obniz-debug"></div>
+
+  <button id="buttonA" class="btn btn-warning">Play</button>
+  
+<script>
+  let obniz = new Obniz("OBNIZ_ID_HERE");
+
+  obniz.onconnect = async function () {
+var speaker = obniz.wired("Speaker", {signal:1 , gnd:0 });    
+
+  $("#buttonA").on('touchstart mousedown', function(){
+    speaker.play(261);  //ボタンが押されたら動かす
+  })
+  $("#buttonA").on('touchend mouseup', function(){
+    speaker.stop(); //ボタンが離されたら止める
+  })    
+    
+  }
+
+</script>
+</body>
+</html>
