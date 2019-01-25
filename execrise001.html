@@ -1,0 +1,56 @@
+<!-- HTML Example -->
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://obniz.io/js/jquery-3.2.1.min.js"></script>
+  <script src="https://unpkg.com/obniz@1.9.1/obniz.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div id="obniz-debug"></div>
+
+<canvas id="field" width="300" height="300"/>
+
+<script>
+  let canvas = document.getElementById('field');
+  let ctx = canvas.getContext('2d');
+  let dot = [];
+  let bars = [];
+  let inputHeight = 0;
+  let frameCount = 0;
+  //let obniz = new Obniz("OBNIZ_ID_HERE");
+  let obniz = new Obniz("6605-0064");
+
+  obniz.onconnect = async function () {
+var hcsr04 = obniz.wired("HC-SR04", {gnd:0, echo:1, trigger:2, vcc:3});
+var speaker = obniz.wired("Speaker", {signal:11 , gnd:10 });    
+    
+  while(true){
+  let avg = 0;
+  let count = 0;
+  for (let i=0; i<3; i++) { // measure three time. and calculate average
+    const val = await hcsr04.measureWait();
+    if (val) {
+      count++;
+      avg += val;
+    }
+  }
+  if (count > 1) {
+    avg /= count;
+  }
+//  console.log(avg);
+    obniz.display.clear();
+    obniz.display.print(avg);
+//  await obniz.wait(100);    
+    
+    if( avg < 30){
+      speaker.play(261); //Do
+    } else {
+      speaker.stop();
+    }
+  }
+  }
+
+</script>
+</body>
+</html>
